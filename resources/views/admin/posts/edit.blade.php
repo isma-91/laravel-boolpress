@@ -1,0 +1,155 @@
+@extends('layouts.app')
+
+@section('content')
+
+        <h2>Edita un Post</h2>
+        <form method="post" action="{{ route('admin.posts.update', ['post' => $post]) }}" class="needs-validation" enctype="multipart/form-data" novalidate>
+            @csrf
+            @method('put')
+
+            <div class="mb-3">
+                <label for="slug" class="form-label">Slug</label>
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug', $post->slug) }}">
+                <div class="invalid-feedback">
+                    @error('slug')
+                        <ul>
+                            @foreach ($errors->get('slug') as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Titolo</label>
+                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $post->title) }}">
+                <div class="invalid-feedback">
+                    @error('title')
+                        <ul>
+                            @foreach ($errors->get('title') as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="category_id" class="form-label">Categoria</label>
+                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @if ($category->id == old('category_id', $post->category->id)) selected @endif>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+
+                </select>
+                <div class="invalid-feedback">
+                    @error('category_id')
+                        <ul>
+                            @foreach ($errors->get('category_id') as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <h3>Tags</h3>
+                @foreach ($tags as $tag)
+                    <div class="form-check">
+                        <input
+                            id="tag-{{ $tag->id }}"
+                            class="form-check-input"
+                            type="checkbox"
+                            value="{{ $tag->id }}"
+                            name="tags[]"
+                            {{-- il nome si "imposta" già come array, perchè è proprio un array che noi vogliamo come risultato. È quesot il modo per dire ai checkbox che noi vogliamo una risposta sottoforma di array. --}}
+                            @if (in_array($tag->id, old('tags', $post->tags->pluck('id')->all()))) checked @endif
+                        >
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                @endforeach
+                @if ($errors->has('tags') || $errors->has('tags.*'))
+                    <div class="text-danger">
+                        ATTENZIONE!! Uno o più tags non validi!
+                    </div>
+                @endif
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Link immagine</label>
+                <input type="url" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image', $post->image) }}">
+                <div class="invalid-feedback">
+                    @error('image')
+                        <ul>
+                            @foreach ($errors->get('image') as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="uploaded_img" class="form-label">Immagine</label>
+                <input class="form-control @error('uploaded_img') is-invalid @enderror" type="file" id="uploaded_img" name="uploaded_img">
+                <div class="invalid-feedback">
+                    @error('uploaded_img')
+                        <ul>
+                            @foreach ($errors->get('uploaded_img') as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+
+                <div>
+                    <img src="{{ asset('storage/' . $post->uploaded_img) }}" alt="{{ $post->title }}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Contenuto del post</label>
+                <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="10">{{ old('content', $post->content) }}</textarea>
+                <div class="invalid-feedback">
+                    @error('content')
+                        <ul>
+                            @foreach ($errors->get('content') as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="excerpt" class="form-label">Anteprima</label>
+                <textarea class="form-control @error('excerpt') is-invalid @enderror" name="excerpt" id="excerpt" rows="3">{{ old('excerpt', $post->excerpt) }}</textarea>
+                <div class="invalid-feedback">
+                    @error('excerpt')
+                        <ul>
+                            @foreach ($errors->get('excerpt') as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Conferma Modifiche</button>
+            </div>
+        </form>
+
+        <form action="{{ route('admin.posts.destroy', ['post' => $post]) }}" method="POST" class="text-center p-3">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-danger">Elimina</button>
+        </form>
+@endsection
