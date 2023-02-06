@@ -9,6 +9,7 @@ import PageHome from './pages/PageHome';
 import PagePosts from './pages/PagePosts';
 import PageSinglePost from './pages/PageSinglePost';
 import PageAbout from './pages/PageAbout';
+import Page404 from './pages/Page404';
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,12 @@ const routes = [
         path: "/about",
         name: "about-us",
         component: PageAbout,
+        props: true,
+    },
+    {
+        path: "*",
+        name: "page404",
+        component: Page404,
         props: true,
     },
 ];
