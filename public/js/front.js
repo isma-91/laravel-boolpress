@@ -5145,6 +5145,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
@@ -5233,8 +5236,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['slug' // avendo messo "props:true" nel file js dove specifichiamo le rotte, nella rotta specifica, possiamo prendere i valori anche dell'indirizzo, del link semplicemente tramite props. Si possono aggiungere anche più "valori" e poi richiamarli qui con lo stesso nome per ottenerne il valore.
+  ]
+});
 
 /***/ }),
 
@@ -5269,7 +5281,7 @@ var _require = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.j
   h = _require.h;
 __webpack_require__(/*! ./base */ "./resources/js/base.js");
 
- // si mette il ./ prima di App perchè altrimenti did efault senza mettere niente lo andrebbe a cercare nella cartella node modules.
+
 
 
 
@@ -5277,25 +5289,30 @@ __webpack_require__(/*! ./base */ "./resources/js/base.js");
 
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]);
 var routes = [{
-  path: '/',
-  name: 'home',
-  component: _pages_PageHome__WEBPACK_IMPORTED_MODULE_1__["default"]
+  path: "/",
+  name: "home",
+  component: _pages_PageHome__WEBPACK_IMPORTED_MODULE_1__["default"],
+  props: true
 }, {
-  path: '/posts',
-  name: 'posts',
-  component: _pages_PagePosts__WEBPACK_IMPORTED_MODULE_2__["default"]
+  path: "/posts",
+  name: "posts",
+  component: _pages_PagePosts__WEBPACK_IMPORTED_MODULE_2__["default"],
+  props: true
 }, {
-  path: '/posts/:slug',
-  name: 'singlePost',
-  component: _pages_PageSinglePost__WEBPACK_IMPORTED_MODULE_3__["default"]
+  path: "/posts/:slug",
+  name: "singlePost",
+  component: _pages_PageSinglePost__WEBPACK_IMPORTED_MODULE_3__["default"],
+  props: true // passa i valori della rotta come props, quindi ci permette di poter estrarre il valore dell'indirizzo, del link tramite props classice di vue, altrimenti dovremmo fare un giro più lungo per richiamarle ogni volta. Possiamo passare anche più di un valore, in questo caso abbiamo passato solo ":slug", ma possiamo aggiungerne altri, semplicemente dividendole con lo "/" e poi mettendo sempre i ":" prima del nuovo valore. Ad esempio: "/posts/:slug/:author"
 }, {
-  path: '/about',
-  name: 'about-us',
-  component: _pages_PageAbout__WEBPACK_IMPORTED_MODULE_4__["default"]
+  path: "/about",
+  name: "about-us",
+  component: _pages_PageAbout__WEBPACK_IMPORTED_MODULE_4__["default"],
+  props: true
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]({
   // chiamandola router possiamo usare l'abbreviazione sotto quando instanziamo la new Vue.
-  // mode: "history", // toglie l'# dagli indirizzi ma si deve modificare
+  mode: "history",
+  // toglie l'# dagli indirizzi ma si deve modificare il web.php per "acchiappare" tutti gli indirizzi e essere mandati alla home per poi essere reindirizzati dal vueRouter alla pagina giusta, se esistente.
   routes: routes //È sempre un oggetto, questa è solo una abbreviazione che sta per "routes = routes", l'importante è che ovviamente la variabile che richiamiamo abbia lo stesso nome della chiave, difatti il nostro array di rotte lo abbiamo chiamato "routes"
 });
 
@@ -11986,16 +12003,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", [_vm._v("SinglePostPage")]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "\n        Lo slug del post è: " + _vm._s(_vm.slug) + "\n        "
+      ),
+    ]),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("SinglePostPage")])])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
