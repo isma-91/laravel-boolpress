@@ -5277,10 +5277,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['slug' // avendo messo "props:true" nel file js dove specifichiamo le rotte, nella rotta specifica, possiamo prendere i valori anche dell'indirizzo, del link semplicemente tramite props. Si possono aggiungere anche più "valori" e poi richiamarli qui con lo stesso nome per ottenerne il valore.
-  ]
+  ],
+  data: function data() {
+    return {
+      post: null
+    };
+  },
+  created: function created() {
+    var _this = this;
+    axios.get('/api/posts/' + this.slug).then(function (response) {
+      return _this.post = response.data.results;
+    });
+    //questo this.slug è possibile prenderlo grazie alla props che abbiamo fatto
+  }
 });
 
 /***/ }),
@@ -12183,15 +12198,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("SinglePostPage")]),
-    _vm._v(" "),
-    _c("p", [
-      _vm._v(
-        "\n        Lo slug del post è: " + _vm._s(_vm.slug) + "\n        "
-      ),
-    ]),
-  ])
+  return _vm.post
+    ? _c("div", [
+        _c("h1", [_vm._v(_vm._s(_vm.post.title))]),
+        _vm._v(" "),
+        _c("img", { attrs: { src: _vm.post.image, alt: _vm.post.title } }),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("\n        " + _vm._s(_vm.post.content) + "\n        "),
+        ]),
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

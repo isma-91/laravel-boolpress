@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/posts', 'Api\Postcontroller@index')->name('posts.index');
-Route::get('/posts/{post:id}', 'Api\Postcontroller@show')->name('posts.show');
+Route::get('/posts/{post:slug}', 'Api\Postcontroller@show')->name('posts.show');
 /*
 tutte queste rotte in api.php mette in automatico al percorso "api" come prima voce, quindi queste 2 rotte appena create stanno per:
 api/posts e api/posts/{post:id}.
