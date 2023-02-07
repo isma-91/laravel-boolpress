@@ -1,6 +1,13 @@
 <template>
     <div v-if="post">
         <h1>{{post.title}}</h1>
+        <p class="category">
+            <strong>Categoria:</strong> {{ post.category.name }}
+        </p>
+        <!-- Qui possiamo richiamare i tags e la category associata ad un singolo post proprio come abbiamo fatto per il backoffice in blade, ovviamente in sintassi vue e dopo aver espanso le informazioni nel controller dei post di vue, dell'API -->
+        <div>
+            <span class="tags" v-for="tag in post.tags" :key="tag.id">{{ tag.name }}</span>
+        </div>
 
         <img :src="post.image" :alt="post.title">
 
@@ -29,7 +36,17 @@ export default {
     }
 }
 </script>
-
-<style>
-
+style <style lang="scss" scoped>
+.tags {
+    display: inline-block;
+    padding: .5rem .8rem;
+    margin: .5rem;
+    background-color: #0D6EFD;
+    border-radius: 100px;
+    color: white;
+    font-weight: bold;
+}
+.category{
+    font-size: 1.5em;
+}
 </style>
