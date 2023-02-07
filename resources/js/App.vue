@@ -3,7 +3,9 @@
         <NavBar />
 
         <main>
-            <router-view></router-view>
+            <div class="container">
+                <router-view></router-view>
+            </div>
         </main>
 
         <Footer />
@@ -20,15 +22,6 @@ export default {
         NavBar,
         Footer,
     },
-    data() {
-        return {
-            arrPosts: [],
-        };
-    },
-    created() {
-        axios.get('/api/posts')
-        .then(response => this.arrPosts = response.data.results);
-    }
 }
 </script>
 

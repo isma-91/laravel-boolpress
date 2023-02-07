@@ -5061,6 +5061,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -5069,17 +5071,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     NavBar: _components_NavBar__WEBPACK_IMPORTED_MODULE_0__["default"],
     Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  data: function data() {
-    return {
-      arrPosts: []
-    };
-  },
-  created: function created() {
-    var _this = this;
-    axios.get('/api/posts').then(function (response) {
-      return _this.arrPosts = response.data.results;
-    });
   }
 });
 
@@ -5234,8 +5225,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      arrPosts: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+    axios.get('/api/posts').then(function (response) {
+      return _this.arrPosts = response.data.results;
+    });
+  }
+});
 
 /***/ }),
 
@@ -11811,7 +11826,9 @@ var render = function () {
     [
       _c("NavBar"),
       _vm._v(" "),
-      _c("main", [_c("router-view")], 1),
+      _c("main", [
+        _c("div", { staticClass: "container" }, [_c("router-view")], 1),
+      ]),
       _vm._v(" "),
       _c("Footer"),
     ],
@@ -11848,7 +11865,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h3", [_vm._v("Ciao sono il footer")])])
+    return _c("div", { staticClass: "text-center mt-4" }, [
+      _c("h3", [_vm._v("Ciao sono il footer")]),
+    ])
   },
 ]
 render._withStripped = true
@@ -12095,16 +12114,53 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", [_vm._v("PostsIndexPage")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row g-3" },
+      _vm._l(_vm.arrPosts, function (post) {
+        return _c("div", { key: post.id, staticClass: "col-sm-6 col-md-4" }, [
+          _c("div", { staticClass: "card h-100" }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: { src: post.image, alt: post.title },
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body d-flex flex-column" },
+              [
+                _c("h5", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(post.title)),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-text flex-grow-1" }, [
+                  _vm._v(_vm._s(post.excerpt)),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      to: { name: "singlePost", params: { slug: post.slug } },
+                    },
+                  },
+                  [_vm._v("Visualizza")]
+                ),
+              ],
+              1
+            ),
+          ]),
+        ])
+      }),
+      0
+    ),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("PostsIndexPage")])])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
