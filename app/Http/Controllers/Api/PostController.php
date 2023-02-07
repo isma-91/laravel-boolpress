@@ -26,4 +26,13 @@ class PostController extends Controller
             'results'=> $post
         ]);
     }
+
+    public function homegrid(){
+        $posts = Post::inRandomOrder()->limit(9)->get();
+
+        return response()->json([
+            'succes' => true,
+            'results'=> $posts
+        ]);
+    }
 }

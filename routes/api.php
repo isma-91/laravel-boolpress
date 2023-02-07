@@ -19,9 +19,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/posts', 'Api\Postcontroller@index')->name('posts.index');
+Route::get('/posts/homegrid', 'Api\Postcontroller@homegrid')->name('posts.homegrid');
 Route::get('/posts/{post:slug}', 'Api\Postcontroller@show')->name('posts.show');
 /*
 tutte queste rotte in api.php mette in automatico al percorso "api" come prima voce, quindi queste 2 rotte appena create stanno per:
 api/posts e api/posts/{post:id}.
 {post:id} sta a indicare che vogliamo mettere nel link l'id del post anzichè dello slug come abbiamo messo di default nel model per il backoffice, per il frontoffice si preferisce l'id.
+ABBIAMO CAMBIATO E DECISO DI USARE COMUNQUE LO SLUG.
 */
