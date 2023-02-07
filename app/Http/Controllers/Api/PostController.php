@@ -11,7 +11,8 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate();
+        //la paginate ci ritorna un oggetto e non un array come con all(), di conseguenza dovremo modificare la richiesta axios nella pagina e tutte le relative chiamate->
 
         return response()->json([
             'succes' => true,
